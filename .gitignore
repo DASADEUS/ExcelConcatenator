@@ -1,0 +1,87 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+# Python создает временные файлы байт-кода и оптимизированные файлы, которые не нужны в репозитории.
+
+# C extensions
+*.so
+# Исключаем скомпилированные расширения C.
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+# Исключаем виртуальные окружения и связанные файлы, так как они создаются локально и не должны храниться в репозитории.
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+# Логи установщика pip, которые генерируются при установке пакетов.
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+# Исключаем файлы отчетов тестирования и покрытия кода.
+
+# Jupyter Notebook
+.ipynb_checkpoints
+# Исключаем контрольные точки Jupyter Notebook.
+
+# pyenv
+.python-version
+# Версия Python, используемая pyenv.
+
+# Environments
+.env
+.env.*
+.venv
+# Виртуальные окружения.
+
+# PyInstaller
+# Обычно создает эти папки и файлы при создании exe-файла
+dist/
+build/
+*.spec
+# Сборочные файлы PyInstaller.
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+# Логи установщика pip.
+
+# Distribution packages
+*.egg
+*.egg-info/
+*.egg-info/
+# Исключаем папки и файлы, связанные с созданием дистрибутивов пакетов Python.
+
+# Pyenv
+.python-version
+# Файл версии Python, используемый pyenv.
+
+# Other
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+# Исключаем другие временные файлы и базы данных.
+
+# Virtual Environment
+.venv/
+/venv/
+/.idea/
+# Исключаем виртуальные окружения, если они создаются в папке .venv.
