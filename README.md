@@ -15,14 +15,11 @@ ExcelConcatenator/
 │   ├── __init__.py
 │   ├── app.py
 │   └── utils.py
-├── tests/
-│   ├── __init__.py
-│   └── test_app.py
 └── assets/
     └── logo.png
 ```
 
-## Установка
+## Установка Для Windows
 
 ### 1. Клонирование репозитория
 
@@ -34,19 +31,26 @@ cd ExcelConcatenator
 ### 2. Установка виртуального окружения
 Рекомендуется использовать виртуальное окружение для изоляции зависимостей.
 ```bash
-pip install virtualenv
-virtualenv venv
-source venv/bin/activate  # Для Windows: venv\Scripts\activate
+python -m venv venv
+venv\Scripts\activate
 ```
 
 ### 3. Установка зависимостей
 ```bash
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
 ### 4. Установка пакета
 ```bash
-python setup.py install
+pip install .
+или
+python setup.py 
+```
+
+### 6. Проверка установленных зависимостей
+```bash
+pip list
 ```
 
 ## Запуск
@@ -54,7 +58,7 @@ python setup.py install
 ### 1. С использованием python
 
 ```bash
-python -m excel_concatenator.app
+python -m main.py
 ```
 ### 2. С использованием командной строки (если установлен через setup.py)
 
@@ -75,6 +79,8 @@ pip install pyinstaller
 
 ```bash
 pyinstaller --onefile -w -n excel_concatenator main.py
+pyinstaller --onefile -w -n excel_concatenator --add-data 'assets;assets' main.py
+
 ```
 Исполняемый файл будет находиться в папке dist.
 
