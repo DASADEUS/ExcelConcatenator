@@ -31,7 +31,9 @@ cd ExcelConcatenator
 ### 2. Установка виртуального окружения
 Рекомендуется использовать виртуальное окружение для изоляции зависимостей.
 ```bash
+#Windows:
 python -m venv venv
+#macOS/Linux:
 venv\Scripts\activate
 ```
 
@@ -45,7 +47,7 @@ pip install -r requirements.txt
 ```bash
 pip install .
 или
-python setup.py 
+python setup.py install
 ```
 
 ### 6. Проверка установленных зависимостей
@@ -58,7 +60,7 @@ pip list
 ### 1. С использованием python
 
 ```bash
-python -m main.py
+python -m main
 ```
 ### 2. С использованием командной строки (если установлен через setup.py)
 
@@ -78,7 +80,6 @@ pip install pyinstaller
 ### Создание исполняемого файла
 
 ```bash
-pyinstaller --onefile -w -n excel_concatenator main.py
 pyinstaller --onefile -w -n excel_concatenator --add-data 'assets;assets' main.py
 
 ```
