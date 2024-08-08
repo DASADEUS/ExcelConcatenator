@@ -1,4 +1,5 @@
-pandas
+numpy==1.19.3
+pandas==2.2.2
 openpyxl
 Pillow
 tk
