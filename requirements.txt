@@ -1,7 +1,7 @@
-FuzzyTM>=0.4.0
-numpy== 1.26.0
-matplotlib == 3.7.0
-pandas==1.5.0
+matplotlib
+pandas
+numpy
 openpyxl
+pyinstaller
 Pillow
 tk

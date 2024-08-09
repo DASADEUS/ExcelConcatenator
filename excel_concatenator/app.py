@@ -2,6 +2,7 @@ import os
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
+from excel_concatenator.utils import resource_path
 import pandas as pd
 import threading
 
@@ -32,7 +33,7 @@ class ExcelConcatenatorApp:
         self.label_m1.pack(pady=10)
 
         # Загружаем и отображаем изображение логотипа
-        self.load_image('assets/files_concatination_scheme.png')
+        self.load_image(resource_path('assets/files_concatination_scheme.png'))
 
         # Текстовая метка с инструкцией
         self.label_m2 = tk.Label(self.root, text="Выберите файлы формата xlsx или папку с ними для объединения")
