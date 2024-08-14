@@ -8,11 +8,13 @@ ExcelConcatenator/
 ├── README.md
 ├── requirements.txt
 ├── setup.py
-├── excel_concatenator/
-│   ├── __init__.py
-│   ├── app.py
-│   ├── utils.py
-│   └── main.py
+├── src/
+│   └── excel_concatenator/
+│       ├── __init__.py
+│       ├── app.py
+│       ├── files_processing.py
+│       ├── utils.py
+│       └── main.py
 └── assets/
     └── files_concatination_scheme.png
 ```
