@@ -83,7 +83,7 @@ pip install pyinstaller
 ### Создание исполняемого файла
 Выполните следующую команду для создания исполняемого файла:
 ```bash
-pyinstaller --clean --onefile --windowed --name excel_concatenator --add-data "assets/files_concatination_scheme.png;assets" --exclude-module torch excel_concatenator\main.py
+pyinstaller --clean --onefile --windowed --name excel_concatenator --add-data "assets/files_concatination_scheme.png;assets" --exclude-module torch src\excel_concatenator\main.py
 ```
 После завершения процесса создания, исполняемый файл будет находиться в папке dist.
 

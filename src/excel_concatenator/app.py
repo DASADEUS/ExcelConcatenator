@@ -417,14 +417,3 @@ class ExcelConcatenatorApp:
             except Exception as e:
                 # Обработка других ошибок
                 messagebox.showerror("Ошибка объединения файлов", f"Произошла ошибка при объединении файлов: {str(e)}")
-
-
-
-
-
-
-
-if __name__ == "__main__":
-
-    app = ExcelConcatenatorApp()  # Инициализируем приложение
-    app.main_screen.mainloop()  # Запускаем основной цикл обработки событий

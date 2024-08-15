@@ -5,9 +5,8 @@ def main():
     """
     Главная функция для запуска приложения.
     """
-    root = tk.Tk()
-    app = ExcelConcatenatorApp(root)
-    root.mainloop()
+    app = ExcelConcatenatorApp()  # Инициализируем приложение
+    app.main_screen.mainloop()  # Запускаем основной цикл обработки событий
 
 # Импортирование основного файла для удобного запуска
 import os
