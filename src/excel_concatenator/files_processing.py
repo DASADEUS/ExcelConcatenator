@@ -129,7 +129,7 @@ def concatenate_files(files: list, add_filename_column: bool = False, skip_top_r
                 expected_columns = len(data.columns[0])
             else:
                 if len(data.columns[0]) != expected_columns:
-                    raise ValueError(f"Несоответствие столбцов в заголовке файла {file} ({len(data.columns[0])}) не соответствует предыдущим ({expected_columns}).")
+                    raise ValueError(f"Несоответствие столбцов в заголовках ({len(data.columns[0])}) не соответствует предыдущим ({expected_columns}).")
 
 
             # Если необходимо, добавляем колонку с именем файла

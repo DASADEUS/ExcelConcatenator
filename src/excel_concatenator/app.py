@@ -423,5 +423,5 @@ class ExcelConcatenatorApp:
 
 
             except Exception as e:
-                # Обработка других ошибок
+                self.hide_screen(self.loading_screen)
                 messagebox.showerror("Ошибка объединения файлов", f"Произошла ошибка при объединении файлов: {str(e)}")
