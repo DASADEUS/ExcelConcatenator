@@ -113,7 +113,7 @@ def concatenate_files(files: list, add_filename_column: bool = False, skip_top_r
 
     # Инициализация пустого DataFrame для хранения результатов
     concatenation_result = pd.DataFrame()
-
+    expected_columns = None
     for file in files:
         try:
             # Чтение файла с использованием функции read_file_excel_formats
@@ -125,12 +125,19 @@ def concatenate_files(files: list, add_filename_column: bool = False, skip_top_r
                 csv_delimiter=csv_delimiter
             )
 
+            if expected_columns is None:
+                expected_columns = len(data.columns[0])
+            else:
+                if len(data.columns[0]) != expected_columns:
+                    raise ValueError(f"Несоответствие столбцов в заголовке файла {file} ({len(data.columns[0])}) не соответствует предыдущим ({expected_columns}).")
+
+
             # Если необходимо, добавляем колонку с именем файла
             if add_filename_column:
                 data['Source'] = os.path.basename(file)
 
             # Объединяем текущий DataFrame с результатом
-            concatenation_result = pd.concat([concatenation_result, data], ignore_index=True)
+            concatenation_result = pd.concat([concatenation_result.reset_index(drop=True), data.reset_index(drop=True)], ignore_index=True)
 
         except Exception as e:
             raise ValueError(f"Ошибка при обработке файла {file}: {e}")

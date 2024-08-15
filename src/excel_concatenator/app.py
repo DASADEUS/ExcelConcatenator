@@ -1,5 +1,6 @@
 import os
 import tkinter as tk
+from tkinter import ttk
 from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
 import threading
@@ -71,16 +72,19 @@ class ExcelConcatenatorApp:
         self.clear_screen_widgets(root=self.main_screen)
         self.main_screen.title("Excel Concatenator")
         self.main_screen.geometry("800x600")
+        self.main_screen.configure(bg='#e0f7fa')
 
         # Создаем главный фрейм
-        main_frame = tk.Frame(self.main_screen)
+        main_frame = tk.Frame(self.main_screen, bg='#e0f7fa')
         main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
         # Инструкция 1
         label1 = tk.Label(
             main_frame,
             text="Выберите файлы или папку для объединения нескольких по строкам.",
-            wraplength=750  # Ограничиваем ширину текста для лучшего отображения
+            wraplength=750,  # Ограничиваем ширину текста для лучшего отображения
+            bg='#e0f7fa',
+            font=('Arial', 12)
         )
         label1.pack(anchor="center", pady=(0, 10))
 
@@ -91,17 +95,20 @@ class ExcelConcatenatorApp:
         # Инструкция 2
         label2 = tk.Label(
             main_frame,
-            text=f"Поддерживаются файлы формата .xlsx .csv .xls .xlsm\n Строго с одной страницей"
+            text=f"Поддерживаются файлы формата .xlsx .csv .xls .xlsm\n Строго с одной страницей",
+            bg='#e0f7fa',
+            font=('Arial', 10)
         )
         label2.pack(anchor="center", pady=(0, 20))
 
         # Фрейм для кнопок
-        buttons_frame = tk.Frame(main_frame)
+        buttons_frame = tk.Frame(main_frame, bg='#e0f7fa')
         buttons_frame.pack(fill=tk.X, pady=10)
 
         # Внутренний фрейм для выравнивания кнопок
-        buttons_inner_frame = tk.Frame(buttons_frame)
+        buttons_inner_frame = tk.Frame(buttons_frame, bg='#e0f7fa')
         buttons_inner_frame.pack(side=tk.TOP, anchor="center")
+
 
         # Кнопка "Выбрать файлы"
         select_files_btn = tk.Button(
@@ -156,10 +163,10 @@ class ExcelConcatenatorApp:
 
             # Удаляем старый логотип, если он существует
             if hasattr(self, 'image_label') and self.image_label.winfo_exists():
-                self.image_label.config(image=photo)
+                self.image_label.config(image=photo, bg='#e0f7fa')
                 self.image_label.image = photo  # Обновляем изображение
             else:
-                self.image_label = tk.Label(root, image=photo)
+                self.image_label = tk.Label(root, image=photo, bg='#e0f7fa')
                 self.image_label.image = photo  # Предотвращаем удаление объекта
                 self.image_label.pack(pady=20)
 
@@ -267,13 +274,13 @@ class ExcelConcatenatorApp:
         self.clear_screen_widgets(root=self.main_screen)  # Очищаем главный экран перед отображением нового контента
 
         # Создаем фрейм для основного содержимого
-        content_frame = tk.Frame(self.main_screen)
+        content_frame = tk.Frame(self.main_screen, bg='#e0f7fa')
         content_frame.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
         # Создаем холст и вертикальный скроллбар
-        canvas = tk.Canvas(content_frame)
+        canvas = tk.Canvas(content_frame, bg='#e0f7fa')
         scrollbar = tk.Scrollbar(content_frame, orient=tk.VERTICAL, command=canvas.yview)
-        scrollable_frame = tk.Frame(canvas)
+        scrollable_frame = tk.Frame(canvas, bg='#e0f7fa')
 
         # Функция для обновления области прокрутки при изменении размера scrollable_frame
         def update_scroll_region(event):
@@ -293,31 +300,31 @@ class ExcelConcatenatorApp:
         content_frame.grid_columnconfigure(1, weight=0)
 
         # Добавляем метку о выбранных файлах
-        selection_label = tk.Label(scrollable_frame, text="Вы выбрали следующие файлы:")
+        selection_label = tk.Label(scrollable_frame, text="Вы выбрали следующие файлы:", bg='#e0f7fa')
         selection_label.pack(pady=10)
 
         # Добавляем список выбранных файлов
         for file in self.selected_files:
-            file_label = tk.Label(scrollable_frame, text=os.path.basename(file), anchor="w", justify=tk.LEFT)
+            file_label = tk.Label(scrollable_frame, text=os.path.basename(file), anchor="w", justify=tk.LEFT, bg='#e0f7fa')
             file_label.pack(fill=tk.BOTH, padx=10)
 
         # Создаем фрейм для кнопок и чекбокса
-        controls_frame = tk.Frame(self.main_screen)
+        controls_frame = tk.Frame(self.main_screen, bg='#e0f7fa')
         controls_frame.pack(side=tk.BOTTOM, pady=20, fill=tk.X)
 
-        tk.Label(controls_frame, text="Количество строк заголовков:").pack(anchor="w", padx=10)
-        self.header_rows_entry = tk.Entry(controls_frame)
-        self.header_rows_entry.pack(padx=10, fill=tk.X)
+        tk.Label(controls_frame, text="Количество строк заголовков:", bg='#e0f7fa').pack(anchor="center", padx=10)
+        self.header_rows_entry = tk.Entry(controls_frame, width=5)
+        self.header_rows_entry.pack(padx=10, anchor="center")
         self.header_rows_entry.insert(0, str(self.header_rows))  # Устанавливаем текущее значение
 
-        tk.Label(controls_frame, text="Пропустить строк сверху:").pack(anchor="w", padx=10)
-        self.skip_top_rows_entry = tk.Entry(controls_frame)
-        self.skip_top_rows_entry.pack(padx=10, fill=tk.X)
+        tk.Label(controls_frame, text="Пропустить строк сверху:", bg='#e0f7fa').pack(anchor="center", padx=10)
+        self.skip_top_rows_entry = tk.Entry(controls_frame, width=5)
+        self.skip_top_rows_entry.pack(padx=10, anchor="center")
         self.skip_top_rows_entry.insert(0, str(self.skip_top_rows))  # Устанавливаем текущее значение
 
-        tk.Label(controls_frame, text="Пропустить строк снизу:").pack(anchor="w", padx=10)
-        self.skip_bottom_rows_entry = tk.Entry(controls_frame)
-        self.skip_bottom_rows_entry.pack(padx=10, fill=tk.X)
+        tk.Label(controls_frame, text="Пропустить строк снизу:", bg='#e0f7fa').pack(anchor="center", padx=10)
+        self.skip_bottom_rows_entry = tk.Entry(controls_frame, width=5)
+        self.skip_bottom_rows_entry.pack(padx=10, anchor="center")
         self.skip_bottom_rows_entry.insert(0, str(self.skip_bottom_rows))  # Устанавливаем текущее значение
 
         # Чекбокс для включения столбца с именами файлов
@@ -325,12 +332,13 @@ class ExcelConcatenatorApp:
         self.include_filename_checkbox_entry = tk.Checkbutton(
             controls_frame,
             text="Добавить столбец с именами файлов",
-            variable=self.include_filename_column
+            variable=self.include_filename_column,
+            bg='#e0f7fa'
         )
         self.include_filename_checkbox_entry.pack(side=tk.TOP, pady=10)
 
         # Создаем фрейм для кнопок
-        buttons_frame = tk.Frame(controls_frame)
+        buttons_frame = tk.Frame(controls_frame, bg='#e0f7fa')
         buttons_frame.pack(side=tk.BOTTOM, pady=10, fill=tk.X)
 
         # Кнопка "Назад"
