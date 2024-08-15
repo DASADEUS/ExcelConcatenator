@@ -66,9 +66,9 @@ pip list
 ### 4. Запуск приложения с использованием python
 
 ```bash
-python -m excel_concatenator\main.py
+python src\excel_concatenator\main.py
 или
-python -m excel_concatenator.main
+python -m src.excel_concatenator.main
 ```
 ### 5. Создание исполняемого файла (exe)
 

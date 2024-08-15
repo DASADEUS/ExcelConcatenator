@@ -79,7 +79,7 @@ class ExcelConcatenatorApp:
         # Инструкция 1
         label1 = tk.Label(
             main_frame,
-            text="Выберите файлы или папку для объединения нескольких файлов или целой папки по строкам.",
+            text="Выберите файлы или папку для объединения нескольких по строкам.",
             wraplength=750  # Ограничиваем ширину текста для лучшего отображения
         )
         label1.pack(anchor="center", pady=(0, 10))
@@ -91,7 +91,7 @@ class ExcelConcatenatorApp:
         # Инструкция 2
         label2 = tk.Label(
             main_frame,
-            text="Поддерживаются файлы формата .xlsx .csv .xls .xlsm"
+            text=f"Поддерживаются файлы формата .xlsx .csv .xls .xlsm\n Строго с одной страницей"
         )
         label2.pack(anchor="center", pady=(0, 20))
 
