@@ -1,13 +1,11 @@
 import os
 import tkinter as tk
-from tkinter import ttk
 from tkinter import filedialog, messagebox
-from PIL import Image, ImageTk
-import threading
-import time
 
-from src.excel_concatenator.utils import resource_path
+from PIL import Image, ImageTk
+
 from src.excel_concatenator.files_processing import concatenate_files, save_file
+from src.excel_concatenator.utils import resource_path
 
 
 class ExcelConcatenatorApp:
@@ -42,18 +40,18 @@ class ExcelConcatenatorApp:
         for widget in widgets:
             widget.pack_forget()
 
-    def clear_screen_widgets(self,root):
+    def clear_screen_widgets(self, root):
         """
         Очищает экран от всех виджетов.
         """
         for widget in root.winfo_children():
             widget.destroy()  # Удаляем каждый виджет
 
-    def hide_screen(self,root):
+    def hide_screen(self, root):
         """Скрывает все виджеты и окно."""
         root.withdraw()
 
-    def show_screen(self,root):
+    def show_screen(self, root):
         """Показывает окно."""
         if root == self.main_screen:
             self.clear_screen_widgets(root=self.main_screen)
@@ -61,7 +59,7 @@ class ExcelConcatenatorApp:
         else:
             root.deiconify()
 
-    def update_screen(self,root):
+    def update_screen(self, root):
         """Обновляет окно."""
         root.update()
 
@@ -89,7 +87,8 @@ class ExcelConcatenatorApp:
         label1.pack(anchor="center", pady=(0, 10))
 
         # Картинка
-        image_widget = self.display_image(resource_path('assets/files_concatination_scheme.png'), root=main_frame, size=(500, 300))
+        image_widget = self.display_image(resource_path('assets/files_concatination_scheme.png'), root=main_frame,
+                                          size=(500, 300))
         image_widget.pack(pady=(0, 10))
 
         # Инструкция 2
@@ -108,7 +107,6 @@ class ExcelConcatenatorApp:
         # Внутренний фрейм для выравнивания кнопок
         buttons_inner_frame = tk.Frame(buttons_frame, bg='#e0f7fa')
         buttons_inner_frame.pack(side=tk.TOP, anchor="center")
-
 
         # Кнопка "Выбрать файлы"
         select_files_btn = tk.Button(
@@ -146,15 +144,18 @@ class ExcelConcatenatorApp:
 
     def display_image(self, image_path, root, size=(20, 20)):
         """
-        Отображает изображение на заданном родительском виджете с заданным размером.
+        Отображает изображение на заданном виджете с возможностью изменения размера.
 
         Args:
             image_path (str): Путь к изображению.
-            parent (tk.Widget): Родительский виджет, на котором будет отображаться изображение.
-            size (tuple): Размер изображения в формате (ширина, высота).
+            root (tk.Widget): Виджет, на котором будет отображаться изображение.
+            size (tuple): Размер изображения в пикселях в формате (ширина, высота).
 
         Returns:
-            tk.Label: Виджет метки с изображением.
+            tk.Label: Виджет метки с изображением, отображающий загруженное изображение.
+
+        Raises:
+            messagebox.showerror: Если изображение не удается загрузить, появляется сообщение об ошибке.
         """
         try:
             image = Image.open(image_path)
@@ -305,7 +306,8 @@ class ExcelConcatenatorApp:
 
         # Добавляем список выбранных файлов
         for file in self.selected_files:
-            file_label = tk.Label(scrollable_frame, text=os.path.basename(file), anchor="w", justify=tk.LEFT, bg='#e0f7fa')
+            file_label = tk.Label(scrollable_frame, text=os.path.basename(file), anchor="w", justify=tk.LEFT,
+                                  bg='#e0f7fa')
             file_label.pack(fill=tk.BOTH, padx=10)
 
         # Создаем фрейм для кнопок и чекбокса
@@ -364,21 +366,22 @@ class ExcelConcatenatorApp:
         downloads_path = os.path.join(os.path.expanduser("~"), "Downloads")
         try:
             save_path = filedialog.asksaveasfilename(
-            title="Сохранить результат",
-            initialdir=downloads_path,
-            defaultextension=".xlsx",
-            filetypes=[
-                ("Excel files (xlsx)", "*.xlsx"),   # Возможность выбора формата .xlsx
-                ("CSV files (csv)", "*.csv"),      # Возможность выбора формата .csv
-                ("Все файлы", "*.*")         # Возможность выбора всех форматов
-            ]
+                title="Сохранить результат",
+                initialdir=downloads_path,
+                defaultextension=".xlsx",
+                filetypes=[
+                    ("Excel files (xlsx)", "*.xlsx"),  # Возможность выбора формата .xlsx
+                    ("CSV files (csv)", "*.csv"),  # Возможность выбора формата .csv
+                    ("Все файлы", "*.*")  # Возможность выбора всех форматов
+                ]
             )
             if not save_path:  # Проверяем, если пользователь нажал "Отмена"
                 return None  # Возвращаем None, чтобы показать, что сохранение было отменено
 
             return save_path
         except Exception as e:
-            messagebox.showerror(title="Ошибка сохранения файла", message=f"Произошла ошибка при сохранении файла: {str(e)}")
+            messagebox.showerror(title="Ошибка сохранения файла",
+                                 message=f"Произошла ошибка при сохранении файла: {str(e)}")
             return None
 
     def concatenate_save(self):
@@ -404,7 +407,7 @@ class ExcelConcatenatorApp:
                 while True:
                     try:
                         # Пытаемся сохранить файл в выбранный формат
-                        save_file(data=concatenation_result,save_path=save_path,csv_delimiter=';')
+                        save_file(data=concatenation_result, save_path=save_path, csv_delimiter=';')
                         self.clear_screen_widgets(self.loading_screen)
                         self.show_screen(self.main_screen)  # Возвращаемся на главный экран
                         messagebox.showinfo("Успешное сохранение", f"Файл успешно сохранен:\n{save_path}")

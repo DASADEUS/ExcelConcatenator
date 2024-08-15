@@ -1,8 +1,10 @@
 import os
-import pyxlsb
+
 import pandas as pd
 
-def read_file_excel_formats(file_path: str, skip_top_rows: int = 0, header_rows: int = 1, skip_bottom_rows: int = 0, csv_delimiter: str = ';') -> pd.DataFrame:
+
+def read_file_excel_formats(file_path: str, skip_top_rows: int = 0, header_rows: int = 1, skip_bottom_rows: int = 0,
+                            csv_delimiter: str = ';') -> pd.DataFrame:
     """
     Читает файл по указанному пути в зависимости от его формата и возвращает DataFrame.
     Поддерживаемые форматы: .xlsx, .xls, .xlsm, .xlsb, .xlt, .xltm, .xltx, .csv
@@ -57,8 +59,8 @@ def read_file_excel_formats(file_path: str, skip_top_rows: int = 0, header_rows:
             # Преобразование всех уровней MultiIndex в строки
 
             df.columns = pd.MultiIndex.from_tuples([
-                                tuple([str(level) for level in column]) if isinstance(column, tuple) else (str(column),)
-                                for column in df.columns])
+                tuple([str(level) for level in column]) if isinstance(column, tuple) else (str(column),)
+                for column in df.columns])
             # Обеспечиваем уникальность колонок
             df.columns = pd.MultiIndex.from_tuples(pd.io.common.dedup_names(df.columns, is_potential_multiindex=True))
 
@@ -75,10 +77,10 @@ def read_file_excel_formats(file_path: str, skip_top_rows: int = 0, header_rows:
             )
             # Создание MultiIndex для заголовков
             headers = [list(df.iloc[i]) for i in range(header_rows)]
-            multi_index = pd.MultiIndex.from_arrays(headers, names=[f'Level_{i+1}' for i in range(header_rows)])
+            multi_index = pd.MultiIndex.from_arrays(headers, names=[f'Level_{i + 1}' for i in range(header_rows)])
             # Назначение MultiIndex в качестве заголовков
             df.columns = multi_index
-            #Склеивает заголовки
+            # Склеивает заголовки
             # df.columns = ['_'.join(map(str, col)) for col in df.columns]
             df = df.iloc[header_rows:]
             # Обеспечиваем уникальность колонок
@@ -98,7 +100,9 @@ def read_file_excel_formats(file_path: str, skip_top_rows: int = 0, header_rows:
     # Возвращаем DataFrame с прочитанными данными
     return df.reset_index(drop=True)
 
-def concatenate_files(files: list, add_filename_column: bool = False, skip_top_rows: int = 0, header_rows: int = 1, skip_bottom_rows: int = 0, csv_delimiter: str = ';') -> pd.DataFrame:
+
+def concatenate_files(files: list, add_filename_column: bool = False, skip_top_rows: int = 0, header_rows: int = 1,
+                      skip_bottom_rows: int = 0, csv_delimiter: str = ';') -> pd.DataFrame:
     """
     Объединяет несколько файлов в один DataFrame.
 
@@ -136,28 +140,33 @@ def concatenate_files(files: list, add_filename_column: bool = False, skip_top_r
                 expected_columns = len(data.columns[0])
             else:
                 if len(data.columns[0]) != expected_columns:
-                    raise ValueError(f"Несоответствие столбцов в заголовках ({len(data.columns[0])}) не соответствует предыдущим ({expected_columns}).")
-
+                    raise ValueError(
+                        f"Несоответствие столбцов в заголовках ({len(data.columns[0])}) не соответствует предыдущим ({expected_columns}).")
 
             # Если необходимо, добавляем колонку с именем файла
             if add_filename_column:
                 data['Source'] = os.path.basename(file)
 
             # Объединяем текущий DataFrame с результатом
-            concatenation_result = pd.concat([concatenation_result.reset_index(drop=True), data.reset_index(drop=True)], ignore_index=True)
+            concatenation_result = pd.concat([concatenation_result.reset_index(drop=True), data.reset_index(drop=True)],
+                                             ignore_index=True)
 
         except Exception as e:
             raise ValueError(f"Ошибка при обработке файла {file}: {e}")
 
     return concatenation_result.reset_index(drop=True)
 
+
 def save_file(data: pd.DataFrame, save_path: str, csv_delimiter: str = ';') -> None:
     """
     Сохраняет DataFrame в файл формата .xlsx или .csv, в зависимости от расширения указанного пути.
 
-    :param data: DataFrame, содержащий данные для сохранения.
-    :param save_path: Строка с полным путем и именем файла, включая расширение (.xlsx или .csv).
-    :raises ValueError: Если расширение файла не поддерживается или произошла ошибка при сохранении.
+    param:
+        data: DataFrame, содержащий данные для сохранения.
+        save_path: Строка с полным путем и именем файла, включая расширение (.xlsx или .csv).
+        csv_delimiter: Явно указывает разделитель, при сохранении в формате csv.
+    raises:
+        ValueError: Если расширение файла не поддерживается или произошла ошибка при сохранении.
     """
 
     # Определяем расширение файла
