@@ -85,7 +85,7 @@ class ExcelConcatenatorApp:
         label1.pack(anchor="center", pady=(0, 10))
 
         # Картинка
-        image_widget = self.display_image(resource_path('assets/files_concatination_scheme.png'), root=main_frame, size=(400, 200))
+        image_widget = self.display_image(resource_path('assets/files_concatination_scheme.png'), root=main_frame, size=(500, 300))
         image_widget.pack(pady=(0, 10))
 
         # Инструкция 2
@@ -184,7 +184,6 @@ class ExcelConcatenatorApp:
                     ("Все файлы", "*.*")  # Все файлы
                 ]
             )
-            print(files)
             self.input_processing(files)  # Обработка выбора файлов
 
         except Exception as e:
@@ -378,10 +377,7 @@ class ExcelConcatenatorApp:
         """
         Выполняет сохранение объединенного файла в фоновом режиме.
         """
-        print(self.include_filename_column.get())
-        print(self.skip_top_rows_entry.get())
-        print(self.header_rows_entry.get())
-        print(self.skip_bottom_rows_entry.get())
+
         save_path = self.savepath_selection_window()
         if save_path is not None:
             self.setup_loading_screen()
@@ -391,12 +387,16 @@ class ExcelConcatenatorApp:
             try:
                 # Объединяем файлы один раз
 
-                concatenation_result = concatenate_files(self.selected_files, add_filename_column=self.include_filename_column.get(),skip_top_rows=self.skip_top_rows_entry.get(), header_rows=self.header_rows_entry.get(), skip_bottom_rows=self.skip_bottom_rows_entry.get())
+                concatenation_result = concatenate_files(files=self.selected_files,
+                                                         add_filename_column=self.include_filename_column.get(),
+                                                         skip_top_rows=int(self.skip_top_rows_entry.get()),
+                                                         header_rows=int(self.header_rows_entry.get()),
+                                                         skip_bottom_rows=int(self.skip_bottom_rows_entry.get()))
 
                 while True:
                     try:
                         # Пытаемся сохранить файл в выбранный формат
-                        save_file(data=concatenation_result,path=save_path)
+                        save_file(data=concatenation_result,save_path=save_path,csv_delimiter=';')
                         self.clear_screen_widgets(self.loading_screen)
                         self.show_screen(self.main_screen)  # Возвращаемся на главный экран
                         messagebox.showinfo("Успешное сохранение", f"Файл успешно сохранен:\n{save_path}")
