@@ -4,7 +4,7 @@ import pandas as pd
 
 
 def read_file_excel_formats(file_path: str, skip_top_rows: int = 0, header_rows: int = 1, skip_bottom_rows: int = 0,
-                            csv_delimiter: str = ';') -> pd.DataFrame:
+                            csv_delimiter: str = ',') -> pd.DataFrame:
     """
     Читает файл по указанному пути в зависимости от его формата и возвращает DataFrame.
     Поддерживаемые форматы: .xlsx, .xls, .xlsm, .xlsb, .xlt, .xltm, .xltx, .csv

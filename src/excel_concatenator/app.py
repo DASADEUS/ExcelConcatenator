@@ -22,6 +22,7 @@ class ExcelConcatenatorApp:
         self.skip_top_rows = 0
         self.header_rows = 1
         self.skip_bottom_rows = 0
+        self.csv_delimiter =';'
         # self.include_filename_column = tk.BooleanVar(value=True)  # Переменная для состояния чекбокса
         self.setup_main_screen()  # Настраиваем основной экран
         self.show_screen(self.main_screen)  # Отображаем главный экран
@@ -329,6 +330,11 @@ class ExcelConcatenatorApp:
         self.skip_bottom_rows_entry.pack(padx=10, anchor="center")
         self.skip_bottom_rows_entry.insert(0, str(self.skip_bottom_rows))  # Устанавливаем текущее значение
 
+        tk.Label(controls_frame, text="Укажите разделитель CSV при необходимости:", bg='#e0f7fa').pack(anchor="center", padx=10)
+        self.csv_delimiter_entry = tk.Entry(controls_frame, width=5)
+        self.csv_delimiter_entry.pack(padx=10, anchor="center")
+        self.csv_delimiter_entry.insert(0, str(self.csv_delimiter))  # Устанавливаем текущее значение
+
         # Чекбокс для включения столбца с именами файлов
         self.include_filename_column = tk.BooleanVar(value=True)
         self.include_filename_checkbox_entry = tk.Checkbutton(
@@ -402,12 +408,13 @@ class ExcelConcatenatorApp:
                                                          add_filename_column=self.include_filename_column.get(),
                                                          skip_top_rows=int(self.skip_top_rows_entry.get()),
                                                          header_rows=int(self.header_rows_entry.get()),
-                                                         skip_bottom_rows=int(self.skip_bottom_rows_entry.get()))
+                                                         skip_bottom_rows=int(self.skip_bottom_rows_entry.get()),
+                                                         csv_delimiter=str(self.csv_delimiter_entry.get()))
 
                 while True:
                     try:
                         # Пытаемся сохранить файл в выбранный формат
-                        save_file(data=concatenation_result, save_path=save_path, csv_delimiter=';')
+                        save_file(data=concatenation_result, save_path=save_path, csv_delimiter=str(self.csv_delimiter_entry.get()))
                         self.clear_screen_widgets(self.loading_screen)
                         self.show_screen(self.main_screen)  # Возвращаемся на главный экран
                         messagebox.showinfo("Успешное сохранение", f"Файл успешно сохранен:\n{save_path}")
